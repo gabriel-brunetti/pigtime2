@@ -48,6 +48,8 @@ module.exports = {
       telephone1,
       telephone2,
       urlImg,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
       .then((user) => user)
       .catch((err) => res.status(503).send('Serviço não disponível'))
@@ -76,5 +78,26 @@ module.exports = {
     await Users.destroy({ where: { id } })
 
     return res.json('usuário deletado')
+  },
+  login: async (req, res) => {
+    const { email, password } = req.body
+    const user = await Users.findOne({
+      where: {
+        email: email,
+      },
+    }).then((u) => u)
+    console.log(user)
+    // checking if user exists
+    if (!user) {
+      return res.send('Usuário e/ou senha inválidos')
+    }
+    // comparing passwords
+    if (!bcrypt.compareSync(password, user.password)) {
+      return res.send('Usuário e/ou senha inválidos')
+    }
+    // login the user
+    req.session.user = user
+    console.log(user.id)
+    return res.send('Usuário logado')
   },
 }
