@@ -1,0 +1,7 @@
+CRUD SERVICES e USERS
+☐ Garantir funcionalidade do UPDATE (capturar o valor prévio dos campos)
+
+CRUD SERVICES
+☐ Validation -> specially prevent services to be stored with a date older than today.
+
+
