@@ -7,6 +7,15 @@ module.exports = {
     const users = await Users.findAll()
     return res.json(users)
   },
+  read: async (req, res) => {
+    const { id } = req.params
+    const user = await Users.findOne({ where: { id } })
+    if (user) {
+      return res.json(user)
+    } else {
+      return res.send('usuário não encontrado')
+    }
+  },
   store: async (req, res) => {
     const {
       firstName,
@@ -44,5 +53,28 @@ module.exports = {
       .catch((err) => res.status(503).send('Serviço não disponível'))
 
     return res.json(userCreated)
+  },
+
+  edit: async (req, res) => {
+    const { id } = req.params
+    const user = await Users.findOne({
+      where: {
+        id,
+      },
+    })
+
+    return res.json(user)
+  },
+  update: async (req, res) => {
+    const { id } = req.params
+    const user = await Users.update({ ...req.body }, { where: { id } })
+
+    return res.json(user)
+  },
+  delete: async (req, res) => {
+    const { id } = req.params
+    await Users.destroy({ where: { id } })
+
+    return res.json('usuário deletado')
   },
 }

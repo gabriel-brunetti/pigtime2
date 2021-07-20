@@ -23,10 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.Services, {
-  //     foreignKey: 'user_id',
-  //   })
-  // }
+  User.associate = (models) => {
+    User.hasMany(models.Services, {
+      foreignKey: 'user_id',
+    })
+  }
   return User
 }
